@@ -23,7 +23,7 @@ public class Main {
 
     @GET
     @Path("getWeatherOnSpot")
-    public Response getWeatherOnSpot(GetWeatherRequest request) throws URISyntaxException {
+    public Response getWeatherOnSpot(GetWeatherRequest request){
         return Response.ok(weatherResource.getWeatherOnSpot(request.cordsList.getFirst())).build();
     }
 }
