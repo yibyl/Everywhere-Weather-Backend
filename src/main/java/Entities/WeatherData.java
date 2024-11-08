@@ -1,7 +1,6 @@
 package Entities;
 
 import jakarta.enterprise.context.ApplicationScoped;
-
 import java.util.List;
 
 @ApplicationScoped
@@ -9,7 +8,7 @@ public class WeatherData {
     public double lat;
     public double lon;
     public String timezone;
-    public int timezoneOffset;
+    public int timezone_offset;
     public Current current;
     public List<Minutely> minutely;
     public List<Hourly> hourly;
@@ -20,15 +19,18 @@ public class WeatherData {
         public long sunrise;
         public long sunset;
         public double temp;
-        public double feelsLike;
+        public double feels_like;
         public int pressure;
         public int humidity;
-        public double dewPoint;
+        public double dew_point;
         public double uvi;
         public int clouds;
         public int visibility;
-        public double windSpeed;
-        public int windDeg;
+        public double wind_speed;
+        public double wind_gust;
+        public int wind_deg;
+        public Precipitation rain;
+        public Precipitation snow;
         public List<Weather> weather;
     }
 
@@ -40,18 +42,20 @@ public class WeatherData {
     public static class Hourly {
         public long dt;
         public double temp;
-        public double feelsLike;
+        public double feels_like;
         public int pressure;
         public int humidity;
-        public double dewPoint;
+        public double dew_point;
         public double uvi;
         public int clouds;
         public int visibility;
-        public double windSpeed;
-        public int windDeg;
-        public double windGust;
-        public List<Weather> weather;
+        public double wind_speed;
+        public double wind_gust;
+        public int wind_deg;
         public double pop;
+        public Precipitation rain;
+        public Precipitation snow;
+        public List<Weather> weather;
     }
 
     public static class Daily {
@@ -60,21 +64,22 @@ public class WeatherData {
         public long sunset;
         public long moonrise;
         public long moonset;
-        public double moonPhase;
+        public double moon_phase;
         public String summary;
         public Temperature temp;
-        public FeelsLike feelsLike;
+        public FeelsLike feels_like;
         public int pressure;
         public int humidity;
-        public double dewPoint;
-        public double windSpeed;
-        public int windDeg;
-        public double windGust;
-        public List<Weather> weather;
+        public double dew_point;
+        public double wind_speed;
+        public double wind_gust;
+        public int wind_deg;
         public int clouds;
         public double pop;
         public double uvi;
         public double rain;
+        public double snow;
+        public List<Weather> weather;
     }
 
     public static class Weather {
@@ -85,18 +90,22 @@ public class WeatherData {
     }
 
     public static class Temperature {
+        public double morn;
         public double day;
+        public double eve;
+        public double night;
         public double min;
         public double max;
-        public double night;
-        public double eve;
-        public double morn;
     }
 
     public static class FeelsLike {
-        public double day;
-        public double night;
-        public double eve;
         public double morn;
+        public double day;
+        public double eve;
+        public double night;
+    }
+
+    public static class Precipitation {
+        public double one_hour;
     }
 }

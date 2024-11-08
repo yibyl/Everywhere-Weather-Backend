@@ -1,10 +1,12 @@
+import Entities.GoogleRoutesResponse;
 import Recources.WeatherResource;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.core.Response;
-import requests.GetWeatherRequest;
+import requests.GetRouteWeatherRequest;
+import requests.GetSpotWeatherRequest;
 
 import java.net.URISyntaxException;
 
@@ -17,13 +19,13 @@ public class Main {
 
     @GET
     @Path("getWeatherOnRoute")
-    public Response getWeatherOnRoute(GetWeatherRequest request){
-        return Response.ok(weatherResource.getWeatherOnRoute(request)).build();
+    public Response getWeatherOnRoute(GetRouteWeatherRequest request){
+        return Response.ok(weatherResource.getWeatherOnRoute(request.route)).build();
     }
 
     @GET
     @Path("getWeatherOnSpot")
-    public Response getWeatherOnSpot(GetWeatherRequest request){
-        return Response.ok(weatherResource.getWeatherOnSpot(request.cordsList.getFirst())).build();
+    public Response getWeatherOnSpot(GetSpotWeatherRequest request){
+        return Response.ok(weatherResource.getWeatherOnSpot(request)).build();
     }
 }
