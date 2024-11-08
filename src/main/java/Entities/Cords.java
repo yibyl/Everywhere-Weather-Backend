@@ -7,6 +7,20 @@ public class Cords {
     public float lat;
     public float lon;
 
+    public Cords(float lat, float lon){
+        this.lat = lat;
+        this.lon = lon;
+    }
+    public Cords(){
+
+    }
+
+    @Override
+    public String toString() {
+        return "lat=" + lat +
+                ", lon=" + lon;
+    }
+
     public float getLat() {
         return lat;
     }

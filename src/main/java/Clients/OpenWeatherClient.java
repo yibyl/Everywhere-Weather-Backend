@@ -1,6 +1,6 @@
 package Clients;
 
-import Entities.WeatherData;
+import Responses.WeatherDataResponse;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.QueryParam;
@@ -11,6 +11,6 @@ public interface OpenWeatherClient {
 
     @GET
     @Path("/data/3.0/onecall")
-    public WeatherData getWeather(@QueryParam("lat") double lat, @QueryParam("lon") double lon, @QueryParam("appid") String appid);
+    public WeatherDataResponse getWeather(@QueryParam("lat") double lat, @QueryParam("lon") double lon, @QueryParam("appid") String appid);
 
 }

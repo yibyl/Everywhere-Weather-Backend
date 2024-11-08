@@ -1,11 +1,9 @@
-package Entities;
+package Responses;
 
 import java.util.List;
 
 public class GoogleRoutesResponse {
-    public int timeOffset;
     public List<Route> routes;
-    public List<GeocodingResult> geocodingResults;
 
     public static class Route {
         public List<String> routeLabels;
@@ -53,10 +51,4 @@ public class GoogleRoutesResponse {
         public double latitude;
         public double longitude;
     }
-
-    public static class GeocodingResult {
-        public Location location;
-        public String address;
-    }
 }
-

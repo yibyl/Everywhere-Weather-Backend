@@ -1,10 +1,10 @@
-package Entities;
+package Responses;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import java.util.List;
 
 @ApplicationScoped
-public class WeatherData {
+public class WeatherDataResponse {
     public double lat;
     public double lon;
     public String timezone;

@@ -11,4 +11,5 @@ public class MinutelyWeatherDTO {
     public double rain;
     public double snow;
     public String weatherDescription;
+    public double precipitaionChance;
 }
