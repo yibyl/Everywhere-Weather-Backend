@@ -11,7 +11,7 @@ geocodingResult - google maps api gives it but wont be used
 
 timeOffset - time offset in seconds.
 
-##### Gets the weather data on the closest coordinate rounded to the hundredths for each leg at the closest time available. Can be given an offset min(0-3599) hour(3600-172799) day(172800-604800).
+##### Gets the weather data on the closest coordinate rounded to the hundredths for each leg at the closest time available. Can be given an offset min(0-3599) hour(3600-172799).
 
 #### Returns:
 Returns weather data for every step at a time offset and the time it takes to get there.
