@@ -1,4 +1,4 @@
-import Recources.WeatherResource;
+import Resources.WeatherResource;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;

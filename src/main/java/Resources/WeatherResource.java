@@ -1,4 +1,4 @@
-package Recources;
+package Resources;
 
 import Clients.OpenWeatherClient;
 import DTOs.DailyWeatherDTO;
