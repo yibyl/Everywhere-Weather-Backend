@@ -1,6 +1,6 @@
 # Endpoints
 
-## GET
+## POST
 
 ### /getWeatherOnRoute
 
@@ -202,7 +202,7 @@ timeOffset = -1
 "weatherDescription": "overcast clouds"
 }
 
-## POST
+## GET
 
 ## PUT
 

@@ -16,10 +16,7 @@ import org.eclipse.microprofile.rest.client.inject.RestClient;
 import requests.GetSpotWeatherRequest;
 
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -37,31 +34,45 @@ public class WeatherResource {
 
     public List<RouteWeatherDTO> getWeatherOnRoute(GoogleRoutesResponse request, int timeOffset) {
         List<RouteWeatherDTO> routesWeather = new ArrayList<>();
-        AtomicBoolean fistLeg = new AtomicBoolean(true);
-        request.routes.forEach(route -> {
-            fistLeg.set(true);
-            AtomicInteger totalDuration = new AtomicInteger();
-            Map<Cords, MinutelyWeatherDTO> routeWeather = new HashMap<>();
-            route.legs.forEach(leg -> {
-                if (fistLeg.get()){
-                    Cords cords = new Cords((float)leg.startLocation.latLng.latitude, (float)leg.startLocation.latLng.longitude);
-                    routeWeather.put(cords,getWeatherOnSpot(cords, findClosestTimeOffset(timeOffset)));
-                    fistLeg.set(false);
-                }
-                try{
-                    leg.steps.forEach(step -> {
-                        totalDuration.addAndGet(convertTimeString(step.staticDuration));
-                        Cords cords = new Cords((float)step.endLocation.latLng.latitude, (float)step.endLocation.latLng.longitude);
-                        routeWeather.put(cords,getWeatherOnSpot(cords, findClosestTimeOffset(timeOffset + totalDuration.get())));
-                    });
-                }catch (Exception e){
+        AtomicBoolean firstLeg = new AtomicBoolean(true);
 
+        request.routes.forEach(route -> {
+            firstLeg.set(true);
+            AtomicInteger totalDuration = new AtomicInteger(); // Total duration in seconds
+            Map<Cords, MinutelyWeatherDTO> routeWeather = new HashMap<>();
+
+            route.legs.forEach(leg -> {
+                if (firstLeg.get()) {
+                    Cords cords = new Cords((float) leg.startLocation.latitude, (float) leg.startLocation.longitude);
+                    routeWeather.put(cords, getWeatherOnSpot(cords, findClosestTimeOffset(timeOffset)));
+                    firstLeg.set(false);
+                }
+
+                try {
+                    leg.steps.forEach(step -> {
+                        // Add the step duration to the total duration
+                        totalDuration.addAndGet(step.staticDuration.value);
+
+                        // Get the coordinates of the step's end location
+                        Cords cords = new Cords((float) step.endLocation.latitude, (float) step.endLocation.longitude);
+
+                        // Get weather for the current location with the adjusted time offset
+                        routeWeather.put(cords, getWeatherOnSpot(cords, findClosestTimeOffset(timeOffset + totalDuration.get())));
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             });
 
-            routesWeather.add(new RouteWeatherDTO(route.routeLabels, routeWeather));
+            routesWeather.add(new RouteWeatherDTO(Collections.singletonList("route"), routeWeather));
         });
+
         return routesWeather;
+    }
+
+
+    private int convertTimeString(String time){
+        return Integer.parseInt(time.replace("s",""));
     }
 
     public MinutelyWeatherDTO getWeatherOnSpot(Cords cords, int timeOffset){
@@ -104,9 +115,7 @@ public class WeatherResource {
         }
     }
 
-    private int convertTimeString(String time){
-        return Integer.parseInt(time.replace("s",""));
-    }
+
 
     private int findClosestTimeOffset(int offset){
         if(offset < 3600){
